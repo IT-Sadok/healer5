@@ -18,6 +18,5 @@ namespace BookingApp
         {
             return $"{Id}. {Name}";
         }
-
     }
 }

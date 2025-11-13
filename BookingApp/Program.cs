@@ -3,11 +3,11 @@ using System.Xml.Linq;
 
 namespace BookingApp
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            List<Host> hosts = new List<Host>();
+            var hosts = new List<Host>();
 
             hosts.Add(new Host
             {
@@ -25,8 +25,9 @@ namespace BookingApp
                 new Apartment
                 {
                     Id = 2, Name = "Cozy Cabin"}
-   }
+                }
             });
+
             hosts.Add(new Host
             {
                 Id = 3, 
@@ -36,19 +37,17 @@ namespace BookingApp
                 new Apartment
                 {
                     Id = 2, Name = "City Center Loft"}
-    }
-            });
-          
+                }
+            });          
 
             foreach (Host name in hosts)
             {
                 Console.WriteLine(name);
             }
 
-
             if (int.TryParse(Console.ReadLine(), out int idFromUser))
             {
-                Host selectedHost = hosts.FirstOrDefault(h => h.Id == idFromUser);
+                var selectedHost = hosts.FirstOrDefault(h => h.Id == idFromUser);
 
                 if (selectedHost != null)
                 {
@@ -68,6 +67,4 @@ namespace BookingApp
             }
         }
     }
- }
-
-
+}
