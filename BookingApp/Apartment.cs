@@ -23,9 +23,3 @@ namespace BookingApp
         }
     }
 }
-
-
-
-
-
-
