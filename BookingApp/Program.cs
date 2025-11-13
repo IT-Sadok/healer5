@@ -45,7 +45,7 @@ namespace BookingApp
                 Console.WriteLine(name);
             }
 
-            if (int.TryParse(Console.ReadLine(), out int idFromUser))
+            if (int.TryParse(Console.ReadLine(), out var idFromUser))
             {
                 var selectedHost = hosts.FirstOrDefault(h => h.Id == idFromUser);
 
