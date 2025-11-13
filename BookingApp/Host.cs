@@ -14,14 +14,6 @@ namespace BookingApp
 
         public List<Apartment> Apartments { get; set; }
 
-
-        public Host(int id, string name, List<Apartment> apartment)
-        {
-            Id = id;
-            Name = name;
-            Apartments = apartment;
-        }
-
         public override string ToString()
         {
             return $"{Id}. {Name}";

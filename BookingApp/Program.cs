@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 
 namespace BookingApp
 {
@@ -8,18 +9,35 @@ namespace BookingApp
         {
             List<Host> hosts = new List<Host>();
 
-            hosts.Add(new Host(1, "Marlen", new List<Apartment> {
-                    new Apartment(1, "SeaStars"),
-                    new Apartment(2, "Moon Light")
-                }));
-            hosts.Add(new Host(2, "David", new List<Apartment> {
-                new Apartment(1, "Lake Dream"),
-                new Apartment(2, "Cozy Cabin")
-            }));
-            hosts.Add(new Host(3, "Loise", new List<Apartment> {
-                new Apartment(1, "Forest View"),
-                new Apartment(2, "City Center Loft")
-            }));
+            hosts.Add(new Host
+            {
+                Id = 1, 
+                Name = "Marlen", 
+                Apartments = new List<Apartment> {
+                    new Apartment{Id = 1, Name = "SeaStars"},
+                    new Apartment { Id = 2, Name = "Moon Light"}
+                }
+            });
+
+            hosts.Add(new Host{Id = 2, Name = "David",
+                Apartments = new List<Apartment> {
+                new Apartment{Id = 1, Name = "Lake Dream"},
+                new Apartment
+                {
+                    Id = 2, Name = "Cozy Cabin"}
+   }
+            });
+            hosts.Add(new Host
+            {
+                Id = 3, 
+                Name = "Loise",
+                Apartments = new List<Apartment> {
+                new Apartment{Id = 1, Name = "Forest View"},
+                new Apartment
+                {
+                    Id = 2, Name = "City Center Loft"}
+    }
+            });
           
 
             foreach (Host name in hosts)
