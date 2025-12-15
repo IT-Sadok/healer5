@@ -10,11 +10,8 @@ namespace BookingApp
     public class Apartment
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        public override string ToString()
-        {
-            return $"{Id}. {Name}";
-        }
+        public override string ToString() => $"{Id}. {Name}";
     }
 }

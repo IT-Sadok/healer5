@@ -10,13 +10,10 @@ namespace BookingApp
     public class Host
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        public List<Apartment> Apartments { get; set; }
+        public List<Apartment> Apartments { get; set; } = new List<Apartment>();
 
-        public override string ToString()
-        {
-            return $"{Id}. {Name}";
-        }
+        public override string ToString() => $"{Id}. {Name}";
     }
 }

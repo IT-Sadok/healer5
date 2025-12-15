@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace BookingApp
 {
@@ -7,64 +7,48 @@ namespace BookingApp
     {
         public static void Main(string[] args)
         {
-            var hosts = new List<Host>();
+            var repository = new HostRepository();
 
-            hosts.Add(new Host
+            InitializeData(repository);
+
+            var service = new HostService(repository);
+
+            var menu = new MenuUI(service);
+
+            menu.Run();
+        }
+
+        private static void InitializeData(HostRepository repository)
+        {
+            repository.Add(new Host
             {
-                Id = 1, 
-                Name = "Marlen", 
-                Apartments = new List<Apartment> {
-                    new Apartment{Id = 1, Name = "SeaStars"},
-                    new Apartment { Id = 2, Name = "Moon Light"}
-                }
-            });
-
-            hosts.Add(new Host{Id = 2, Name = "David",
-                Apartments = new List<Apartment> {
-                new Apartment{Id = 1, Name = "Lake Dream"},
-                new Apartment
+                Name = "Marlen",
+                Apartments = new List<Apartment>
                 {
-                    Id = 2, Name = "Cozy Cabin"}
+                    new Apartment { Id = 1, Name = "SeaStars" },
+                    new Apartment { Id = 2, Name = "Moon Light" }
                 }
             });
 
-            hosts.Add(new Host
+            repository.Add(new Host
             {
-                Id = 3, 
+                Name = "David",
+                Apartments = new List<Apartment>
+                {
+                    new Apartment { Id = 1, Name = "Lake Dream" },
+                    new Apartment { Id = 2, Name = "Cozy Cabin" }
+                }
+            });
+
+            repository.Add(new Host
+            {
                 Name = "Loise",
-                Apartments = new List<Apartment> {
-                new Apartment{Id = 1, Name = "Forest View"},
-                new Apartment
+                Apartments = new List<Apartment>
                 {
-                    Id = 2, Name = "City Center Loft"}
+                    new Apartment { Id = 1, Name = "Forest View" },
+                    new Apartment { Id = 2, Name = "City Center Loft" }
                 }
-            });          
-
-            foreach (Host name in hosts)
-            {
-                Console.WriteLine(name);
-            }
-
-            if (int.TryParse(Console.ReadLine(), out var idFromUser))
-            {
-                var selectedHost = hosts.FirstOrDefault(h => h.Id == idFromUser);
-
-                if (selectedHost != null)
-                {
-                    foreach (Apartment apartment in selectedHost.Apartments)
-                    {
-                        Console.WriteLine(apartment);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No host with this ID found!");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Incorrect input!");
-            }
+            });
         }
     }
 }
