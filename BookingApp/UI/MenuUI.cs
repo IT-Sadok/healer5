@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookingApp
 {
     public class MenuUI
     {
-        private HostService _hostService;
+        private IHostService _hostService;
 
-        public MenuUI(HostService hostService)
+        public MenuUI(IHostService hostService)
         {
             _hostService = hostService;
         }
 
         public void Run()
         {
-            bool running = true;
+            var running = true;
 
             while (running)
             {
@@ -65,7 +66,7 @@ namespace BookingApp
         private void ShowAllHosts()
         {
             var hosts = _hostService.GetAllHosts();
-            if (hosts.Count == 0)
+            if (!hosts.Any())
             {
                 Console.WriteLine("No hosts available.");
                 return;
@@ -81,7 +82,14 @@ namespace BookingApp
         private void AddNewHost()
         {
             Console.Write("Enter host name: ");
-            string name = Console.ReadLine();
+
+            string? name = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("Name cannot be empty!");
+                return;
+            }
 
             _hostService.CreateHost(name, new List<Apartment>());
         }
@@ -92,8 +100,13 @@ namespace BookingApp
             if (int.TryParse(Console.ReadLine(), out int id))
             {
                 Console.Write("Enter new name: ");
-                string newName = Console.ReadLine();
+                string? newName = Console.ReadLine();
 
+                if (string.IsNullOrWhiteSpace(newName))
+                {
+                    Console.WriteLine("Name cannot be empty!");
+                    return;
+                }
                 _hostService.UpdateHost(id, newName, null);
             }
             else

@@ -3,7 +3,15 @@ using System.Linq;
 
 namespace BookingApp
 {
-    public class HostRepository
+    public interface IHostRepository
+    {
+        void Add(Host host);
+        IEnumerable<Host> GetAll();
+        Host? GetById(int id);
+        bool Update(Host host);
+        bool Delete(int id);
+    }
+    public class HostRepository : IHostRepository
     {
         private List<Host> _hosts = new List<Host>();
         private int _nextId = 1;
@@ -14,12 +22,12 @@ namespace BookingApp
             _hosts.Add(host);
         }
 
-        public List<Host> GetAll()
+        public IEnumerable<Host> GetAll()
         {
             return _hosts;
         }
 
-        public Host GetById(int id)
+        public Host? GetById(int id)
         {
             return _hosts.FirstOrDefault(h => h.Id == id);
         }

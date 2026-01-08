@@ -3,13 +3,23 @@ using System.Collections.Generic;
 
 namespace BookingApp
 {
-    public class HostService
+    public interface IHostService
     {
-        private HostRepository _repository;
+        void CreateHost(string name, List<Apartment> apartments);
+        IEnumerable<Host> GetAllHosts();
+        Host? GetHostById(int id);
+        void UpdateHost(int id, string newName, List<Apartment> newApartments);
+        void DeleteHost(int id);
+    }
+    public class HostService : IHostService
+    {
+        private readonly IHostRepository _repository;
+        private readonly ILogger _logger;
 
-        public HostService(HostRepository repository)
+        public HostService(IHostRepository repository, ILogger logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         public void CreateHost(string name, List<Apartment> apartments)
@@ -26,20 +36,20 @@ namespace BookingApp
             };
 
             _repository.Add(host);
-            Console.WriteLine($"Host '{name}' created successfully!");
+            _logger.Log($"Host '{name}' created successfully!");
         }
 
-        public List<Host> GetAllHosts()
+        public IEnumerable<Host> GetAllHosts()
         {
             return _repository.GetAll();
         }
 
-        public Host GetHostById(int id)
+        public Host? GetHostById(int id)
         {
             var host = _repository.GetById(id);
             if (host == null)
             {
-                Console.WriteLine("Host not found!");
+                _logger.Log("Host not found!");
             }
             return host;
         }
@@ -49,32 +59,30 @@ namespace BookingApp
             var host = _repository.GetById(id);
             if (host == null)
             {
-                Console.WriteLine("Host not found!");
+                _logger.Log("Host not found!");
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(newName))
             {
-                Console.WriteLine("Name cannot be empty!");
+                _logger.Log("Name cannot be empty!");
                 return;
             }
 
             host.Name = newName;
             host.Apartments = newApartments ?? host.Apartments;
-
             _repository.Update(host);
-            Console.WriteLine("Host updated successfully!");
         }
 
         public void DeleteHost(int id)
         {
             if (_repository.Delete(id))
             {
-                Console.WriteLine("Host deleted successfully!");
+                _logger.Log("Host deleted successfully!");
             }
             else
             {
-                Console.WriteLine("Host not found!");
+                _logger.Log("Host not found!");
             }
         }
     }
